@@ -63,7 +63,9 @@ namespace LinuxMedia.Rockchip
         public UInt32 write_step;
     }
 
-    /* MAX(min, (max - channel_value)) */
+    /// <summary>
+    /// <c>MAX(min, (max - channel_value))</c>
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct rga_osd_invert_factor
     {
@@ -87,12 +89,18 @@ namespace LinuxMedia.Rockchip
     [StructLayout(LayoutKind.Sequential)]
     public struct rga_osd_bpp2
     {
-        public byte ac_swap;           // ac swap flag
-                                       // 0: CA
-                                       // 1: AC
-        public byte endian_swap;       // rgba2bpp endian swap
-                                       // 0: Big endian
-                                       // 1: Little endian
+        /// <summary>
+        /// ac swap flag <br/>
+        /// • <b>0</b>: CA <br/>
+        /// • <b>1</b>: AC
+        /// </summary>
+        public byte ac_swap;
+        /// <summary>
+        /// rgba2bpp endian swap <br/>
+        /// • <b>0</b>: Big endian <br/>
+        /// • <b>1</b>: Little endian
+        /// </summary>
+        public byte endian_swap;
         public rga_color color0;
         public rga_color color1;
     }
@@ -100,39 +108,78 @@ namespace LinuxMedia.Rockchip
     [StructLayout(LayoutKind.Sequential)]
     public struct rga_osd_mode_ctrl
     {
-        public byte mode;               // OSD cal mode:
-                                        //   0b'1: statistics mode
-                                        //   1b'1: auto inversion overlap mode
-        public byte direction_mode;     // horizontal or vertical
-                                        //   0: horizontal
-                                        //   1: vertical
-        public byte width_mode;         // using @fix_width or LUT width
-                                        //   0: fix width
-                                        //   1: LUT width
-        public UInt16 block_fix_width;   // OSD block fixed width
-                                         //   real width = (fix_width + 1) * 2
-        public byte block_num;          // OSD block num
-        public UInt16 flags_index;       // auto invert flags index
+        /// <summary>
+        /// OSD cal mode: <br/>
+        /// • <b>0b'1</b>: statistics mode <br/>
+        /// • <b>1b'1</b>: auto inversion overlap mode
+        /// </summary>
+        public byte mode;
+        /// <summary>
+        /// horizontal or vertical <br/>
+        /// • <b>0</b>: horizontal <br/>
+        /// • <b>1</b>: vertical
+        /// </summary>
+        public byte direction_mode;
+        /// <summary>
+        /// using @fix_width or LUT width <br/>
+        /// • <b>0</b>: fix width <br/>
+        /// • <b>1</b>: LUT width
+        /// </summary>
+        public byte width_mode;
+        /// <summary>
+        /// OSD block fixed width <br/>
+        /// <c>real width = (fix_width + 1) * 2</c>
+        /// </summary>
+        public UInt16 block_fix_width;
+        /// <summary>
+        /// OSD block num
+        /// </summary>
+        public byte block_num;
+        /// <summary>
+        /// auto invert flags index
+        /// </summary>
+        public UInt16 flags_index;
 
         /* invertion config */
-        public byte color_mode;         // selete color
-                                        //   0: src1 color
-                                        //   1: config data color
-        public byte invert_flags_mode;  // invert flag selete
-                                        //   0: use RAM flag
-                                        //   1: usr last result
-        public byte default_color_sel;  // default color mode
-                                        //   0: default is bright
-                                        //   1: default is dark
-        public byte invert_enable;      // invert channel enable
-                                        //   1 << 0: aplha enable
-                                        //   1 << 1: Y/G disable
-                                        //   1 << 2: C/RB disable
-        public byte invert_mode;        // invert cal mode
-                                        //   0: normal(max-data)
-                                        //   1: swap
-        public byte invert_thresh;      // if luma > thresh, osd_flag to be 1
-        public byte unfix_index;        // OSD width config index
+        /// <summary>
+        /// selete color <br/>
+        /// • <b>0</b>: src1 color <br/>
+        /// • <b>1</b>: config data color
+        /// </summary>
+        public byte color_mode;
+        /// <summary>
+        /// invert flag selete <br/>
+        /// • <b>0</b>: use RAM flag <br/>
+        /// • <b>1</b>: usr last result
+        /// </summary>
+        public byte invert_flags_mode;
+        /// <summary>
+        /// default color mode <br/>
+        /// • <b>0</b>: default is bright <br/>
+        /// • <b>1</b>: default is dark
+        /// </summary>
+        public byte default_color_sel;
+        /// <summary>
+        /// invert channel enable <br/>
+        /// • <b>1 &lt;&lt; 0</b>: aplha enable <br/>
+        /// • <b>1 &lt;&lt; 1</b>: Y/G disable <br/>
+        /// • <b>1 &lt;&lt; 2</b>: C/RB disable
+        /// </summary>
+        public byte invert_enable;
+        /// <summary>
+        /// invert cal mode <br/>
+        /// • <b>0</b>: normal(max-data) <br/>
+        /// • <b>1</b>: swap
+        /// </summary>
+        public byte invert_mode;
+        /// <summary>
+        /// if luma &gt; thresh, osd_flag to be 1
+        /// </summary>
+        public byte invert_thresh;
+        /// <summary>
+        /// OSD width config index
+        /// </summary>
+        public byte unfix_index;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -208,7 +255,9 @@ namespace LinuxMedia.Rockchip
 
         public int mpi_mode;
 
-        // int ctx_id;
+        /// <summary>
+        /// also a <c>ctx_id</c>
+        /// </summary>
         public int job_handle;
 
         // total size = 696
