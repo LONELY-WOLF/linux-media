@@ -18,6 +18,23 @@ namespace LinuxMedia.Rockchip
         public int hstride;
         public int format;
         public int size;
+        /// <param name="x">ROI x coord</param>
+        /// <param name="y">ROI y coord</param>
+        /// <param name="w">ROI width</param>
+        /// <param name="h">ROI height</param>
+        /// <param name="ws">Buffer width</param>
+        /// <param name="hs">Buffer height</param>
+        /// <param name="format">Buffer format</param>
+        public rga_rect(int x, int y, int w, int h, int ws, int hs, int format)
+        {
+            xoffset = x;
+            yoffset = y;
+            width = w;
+            height = h;
+            wstride = ws;
+            hstride = hs;
+            this.format = format;
+        }
     }
 
     [StructLayout(LayoutKind.Sequential)]
