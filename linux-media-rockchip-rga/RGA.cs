@@ -18,6 +18,10 @@ namespace LinuxMedia.Rockchip
             //dst = Marshal.PtrToStructure<rga_info>(dst_ptr);
             //src1 = Marshal.PtrToStructure<rga_info>(src1_ptr);
 
+            Marshal.FreeHGlobal(src_ptr);
+            Marshal.FreeHGlobal(src1_ptr);
+            Marshal.FreeHGlobal(dst_ptr);
+
             return ret;
         }
 
@@ -32,6 +36,9 @@ namespace LinuxMedia.Rockchip
             //src = Marshal.PtrToStructure<rga_info>(src_ptr);
             //dst = Marshal.PtrToStructure<rga_info>(dst_ptr);
 
+            Marshal.FreeHGlobal(src_ptr);
+            Marshal.FreeHGlobal(dst_ptr);
+
             return ret;
         }
 
@@ -42,6 +49,8 @@ namespace LinuxMedia.Rockchip
 
             int ret = c_RkRgaColorFill(dst_ptr);
             //dst = Marshal.PtrToStructure<rga_info>(dst_ptr);
+
+            Marshal.FreeHGlobal(dst_ptr);
 
             return ret;
         }
