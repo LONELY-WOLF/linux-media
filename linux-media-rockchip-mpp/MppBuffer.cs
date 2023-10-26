@@ -10,18 +10,28 @@ namespace LinuxMedia.Rockchip
             Handle = handle;
         }
 
-        public MppBuffer(MppBufferGroup group, MppBufferInfo info, string? tag = null)
+        public MppBuffer(MppBufferInfo info, MppBufferGroup? group = null, string? tag = null)
         {
+            IntPtr grp_ptr = (group is null) ? IntPtr.Zero : group.Handle;
             IntPtr info_ptr = Marshal.AllocHGlobal(Marshal.SizeOf(info));
             Marshal.StructureToPtr(info, info_ptr, true);
-            mpp_buffer_import_with_tag(group.Handle, info_ptr, ref Handle, tag);
+            MPP_RET r = mpp_buffer_import_with_tag(grp_ptr, info_ptr, ref Handle, tag);
+            if (r != MPP_RET.MPP_OK)
+            {
+                throw new Exception(string.Format("mpp_buffer_import_with_tag failed with {0:G}", r));
+            }
             // Is it ok to free info_ptr?
             Marshal.FreeHGlobal(info_ptr);
         }
 
-        public MppBuffer(MppBufferGroup group, UInt64 size, string? tag = null)
+        public MppBuffer(UInt64 size, MppBufferGroup? group = null, string? tag = null)
         {
-            mpp_buffer_get_with_tag(group.Handle, ref Handle, size, tag);
+            IntPtr grp_ptr = (group is null) ? IntPtr.Zero : group.Handle;
+            MPP_RET r = mpp_buffer_get_with_tag(grp_ptr, ref Handle, size, tag);
+            if (r != MPP_RET.MPP_OK)
+            {
+                throw new Exception(string.Format("mpp_buffer_get_with_tag failed with {0:G}", r));
+            }
         }
 
         public MPP_RET Put()
