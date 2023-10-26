@@ -43,6 +43,11 @@ namespace LinuxMedia.Rockchip
             return (MPP_RET)Api.control(Context, (int)cmd, param.Handle);
         }
 
+        public MPP_RET Control(MpiCmd cmd, IntPtr param)
+        {
+            return (MPP_RET)Api.control(Context, (int)cmd, param);
+        }
+
         /// <summary>
         /// Create empty context structure and mpi function pointers. <br/>
         /// Use functions in MppApi to access mpp services.
