@@ -2,7 +2,7 @@
 
 namespace LinuxMedia.Rockchip
 {
-    public class MppPacket : MppHandle
+    public class MppPacket : MppHandle, IDisposable
     {
         public MppPacket()
         {
@@ -26,7 +26,7 @@ namespace LinuxMedia.Rockchip
 
         ~MppPacket()
         {
-            mpp_packet_deinit(ref Handle);
+            Dispose();
         }
 
         public IntPtr Data
@@ -435,5 +435,14 @@ namespace LinuxMedia.Rockchip
         /// </summary>
         [DllImport("librockchip_mpp", SetLastError = true)]
         internal static extern IntPtr mpp_packet_get_segment_info(IntPtr packet);
+
+        public void Dispose()
+        {
+            if (Handle != IntPtr.Zero)
+            {
+                mpp_packet_deinit(ref Handle);
+                Handle = IntPtr.Zero;
+            }
+        }
     }
 }

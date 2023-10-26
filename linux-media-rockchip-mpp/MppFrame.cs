@@ -2,7 +2,7 @@
 
 namespace LinuxMedia.Rockchip
 {
-    public class MppFrame : MppHandle
+    public class MppFrame : MppHandle, IDisposable
     {
         public MppFrame()
         {
@@ -11,7 +11,7 @@ namespace LinuxMedia.Rockchip
 
         ~MppFrame()
         {
-            mpp_frame_deinit(ref Handle);
+            Dispose();
         }
 
         public UInt32 Width
@@ -838,6 +838,15 @@ namespace LinuxMedia.Rockchip
         [DllImport("librockchip_mpp", SetLastError = true)]
         internal static extern void mpp_frame_set_hdr_dynamic_meta(IntPtr frame, IntPtr vivi_data);
         #endregion
+
+        public void Dispose()
+        {
+            if (Handle != IntPtr.Zero)
+            {
+                mpp_frame_deinit(ref Handle);
+                Handle = IntPtr.Zero;
+            }
+        }
     }
 
 

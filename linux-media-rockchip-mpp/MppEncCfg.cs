@@ -2,7 +2,7 @@
 
 namespace LinuxMedia.Rockchip
 {
-    public class MppEncCfg : MppHandle
+    public class MppEncCfg : MppHandle, IDisposable
     {
         public MppEncCfg()
         {
@@ -11,7 +11,7 @@ namespace LinuxMedia.Rockchip
 
         ~MppEncCfg()
         {
-            mpp_enc_cfg_deinit(Handle);
+            Dispose();
         }
 
         public MPP_RET Set(string name, Int32 val)
@@ -119,5 +119,14 @@ namespace LinuxMedia.Rockchip
         internal static extern MPP_RET mpp_enc_cfg_get_st(IntPtr cfg, [MarshalAs(UnmanagedType.LPStr)] string name, void* val);
 #endif
         #endregion
+
+        public void Dispose()
+        {
+            if (Handle != nint.Zero)
+            {
+                mpp_enc_cfg_deinit(Handle);
+                Handle = nint.Zero;
+            }
+        }
     }
 }
