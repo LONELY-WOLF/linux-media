@@ -52,6 +52,30 @@ namespace LinuxMedia.Rockchip
             }
         }
 
+        /// <param name="size">0 - no limit, other - max buffer size</param>
+        /// <param name="count">0 - no limit, other - max buffer count</param>
+        /// <returns></returns>
+        public MPP_RET LimitConfig(UInt64 size, Int32 count)
+        {
+            return mpp_buffer_group_limit_config(Handle, size, count);
+        }
+
+        public static uint TotalNow
+        {
+            get
+            {
+                return mpp_buffer_total_now();
+            }
+        }
+
+        public static uint TotalMax
+        {
+            get
+            {
+                return mpp_buffer_total_max();
+            }
+        }
+
         /// <summary>
         /// <c>MPP_RET mpp_buffer_group_get(MppBufferGroup* group, MppBufferType type, MppBufferMode mode, const char* tag, const char* caller);</c>
         /// </summary>
@@ -87,5 +111,20 @@ namespace LinuxMedia.Rockchip
         /// </summary>
         [DllImport("librockchip_mpp", SetLastError = true)]
         internal static extern MppBufferType mpp_buffer_group_type(IntPtr group);
+        /// <summary>
+        /// <c>MPP_RET mpp_buffer_group_limit_config(MppBufferGroup group, size_t size, RK_S32 count)</c>
+        /// </summary>
+        [DllImport("librockchip_mpp", SetLastError = true)]
+        internal static extern MPP_RET mpp_buffer_group_limit_config(IntPtr group, UInt64 size, Int32 count);
+        /// <summary>
+        /// <c>RK_U32 mpp_buffer_total_now()</c>
+        /// </summary>
+        [DllImport("librockchip_mpp", SetLastError = true)]
+        internal static extern UInt32 mpp_buffer_total_now();
+        /// <summary>
+        /// <c>RK_U32 mpp_buffer_total_max()</c>
+        /// </summary>
+        [DllImport("librockchip_mpp", SetLastError = true)]
+        internal static extern UInt32 mpp_buffer_total_max();
     }
 }
