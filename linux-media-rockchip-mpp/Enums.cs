@@ -125,6 +125,34 @@ namespace LinuxMedia.Rockchip
         MPP_POLL_MAX = 8000,
     }
 
+    public enum MppEncHeaderMode
+    {
+        /// <summary>
+        /// default mode: attach vps/sps/pps only on first frame
+        /// </summary>
+        MPP_ENC_HEADER_MODE_DEFAULT,
+        /// <summary>
+        /// IDR mode: attach vps/sps/pps on each IDR frame
+        /// </summary>
+        MPP_ENC_HEADER_MODE_EACH_IDR,
+        MPP_ENC_HEADER_MODE_BUTT,
+    }
+
+    public enum MppEncSeiMode
+    {
+        /// <summary>
+        /// default mode, SEI writing is disabled
+        /// </summary>
+        MPP_ENC_SEI_MODE_DISABLE,
+        /// <summary>
+        /// one sequence has only one SEI
+        /// </summary>
+        MPP_ENC_SEI_MODE_ONE_SEQ,
+        /// <summary>
+        /// one frame may have one SEI, if SEI info has changed
+        /// </summary>
+        MPP_ENC_SEI_MODE_ONE_FRAME
+    }
 
     #region MppFrame
     /// <summary>
