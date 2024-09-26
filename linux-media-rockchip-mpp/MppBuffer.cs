@@ -30,6 +30,11 @@ namespace LinuxMedia.Rockchip
             }
         }
 
+        public static MppBuffer GetEmptyBuffer()
+        {
+            return new MppBuffer(0);
+        }
+
         public MPP_RET Put()
         {
             return mpp_buffer_put_with_caller(Handle);

@@ -4,6 +4,11 @@ namespace LinuxMedia.Rockchip
 {
     public class MppFrame : MppHandle, IDisposable
     {
+        private MppFrame(nint handle) : base(handle)
+        {
+
+        }
+
         public MppFrame()
         {
             mpp_frame_init(ref Handle);
@@ -12,6 +17,11 @@ namespace LinuxMedia.Rockchip
         ~MppFrame()
         {
             Dispose();
+        }
+
+        public static MppFrame GetEmptyFrame()
+        {
+            return new MppFrame(0);
         }
 
         public UInt32 Width
@@ -841,11 +851,14 @@ namespace LinuxMedia.Rockchip
 
         public void Dispose()
         {
-            if (Handle != IntPtr.Zero)
+            if (!IsCopy)
             {
-                mpp_frame_deinit(ref Handle);
-                Handle = IntPtr.Zero;
+                if (Handle != IntPtr.Zero)
+                {
+                    mpp_frame_deinit(ref Handle);
+                }
             }
+            Handle = IntPtr.Zero;
         }
     }
 

@@ -70,6 +70,26 @@ namespace LinuxMedia.Rockchip
             return (MPP_RET)Api.control(Context, (int)cmd, param);
         }
 
+        public MPP_RET Poll(MppPortType type, MppPollType timeout)
+        {
+            return (MPP_RET)Api.poll(Context, (int)type, (int)timeout);
+        }
+
+        public MPP_RET Poll(MppPortType type, int timeout)
+        {
+            return (MPP_RET)Api.poll(Context, (int)type, timeout);
+        }
+
+        public MPP_RET Enqueue(MppPortType type, MppTask task)
+        {
+            return (MPP_RET)Api.enqueue(Context, (int)type, task.Handle);
+        }
+
+        public MPP_RET Dequeue(MppPortType type, MppTask task)
+        {
+            return (MPP_RET)Api.dequeue(Context, (int)type, ref task.Handle);
+        }
+
         /// <summary>
         /// Create empty context structure and mpi function pointers. <br/>
         /// Use functions in MppApi to access mpp services.

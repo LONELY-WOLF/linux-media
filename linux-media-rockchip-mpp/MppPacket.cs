@@ -4,6 +4,11 @@ namespace LinuxMedia.Rockchip
 {
     public class MppPacket : MppHandle, IDisposable
     {
+        private MppPacket(nint handle) : base(handle)
+        {
+
+        }
+
         public MppPacket()
         {
             mpp_packet_new(ref Handle);
@@ -27,6 +32,11 @@ namespace LinuxMedia.Rockchip
         ~MppPacket()
         {
             Dispose();
+        }
+
+        public static MppPacket GetEmptyPacket()
+        {
+            return new MppPacket(0);
         }
 
         public IntPtr Data
@@ -438,11 +448,14 @@ namespace LinuxMedia.Rockchip
 
         public void Dispose()
         {
-            if (Handle != IntPtr.Zero)
+            if (!IsCopy)
             {
-                mpp_packet_deinit(ref Handle);
-                Handle = IntPtr.Zero;
+                if (Handle != IntPtr.Zero)
+                {
+                    mpp_packet_deinit(ref Handle);
+                }
             }
+            Handle = IntPtr.Zero;
         }
     }
 }
