@@ -18,21 +18,43 @@ namespace LinuxMedia.Rockchip
             Destroy();
         }
 
+        /// <summary>
+        /// both send video stream packet to decoder and get video frame from decoder at the same time
+        /// </summary>
+        /// <param name="packet">packet The input video stream, its usage can refer mpp_packet.h.</param>
+        /// <param name="frame">frame The output picture, its usage can refer mpp_frame.h.</param>
+        /// <returns>0 and positive for success, negative for failure. The return value is an error code.For details, please refer mpp_err.h.</returns>
         public MPP_RET Decode(MppPacket packet, MppFrame frame)
         {
             return (MPP_RET)Api.decode(Context, packet.Handle, ref frame.Handle);
         }
 
+        /// <summary>
+        /// both send video frame to encoder and get encoded video stream from encoder at the same time
+        /// </summary>
+        /// <param name="frame">frame The input video data, its usage can refer mpp_frame.h.</param>
+        /// <param name="packet">packet The output compressed data, its usage can refer mpp_packet.h.</param>
+        /// <returns>0 and positive for success, negative for failure. The return value is an error code.For details, please refer mpp_err.h.</returns>
         public MPP_RET Encode(MppFrame frame, MppPacket packet)
         {
             return (MPP_RET)Api.encode(Context, frame.Handle, ref packet.Handle);
         }
 
+        /// <summary>
+        /// send video frame to encoder only, async interface
+        /// </summary>
+        /// <param name="frame">frame The input video data, its usage can refer mpp_frame.h.</param>
+        /// <returns>0 and positive for success, negative for failure. The return value is an error code.For details, please refer mpp_err.h.</returns>
         public MPP_RET EncodePutFrame(MppFrame frame)
         {
             return (MPP_RET)Api.encode_put_frame(Context, frame.Handle);
         }
 
+        /// <summary>
+        /// get encoded video packet from encoder only, async interface
+        /// </summary>
+        /// <param name="packet">packet The output compressed data, its usage can refer mpp_packet.h.</param>
+        /// <returns>0 and positive for success, negative for failure. The return value is an error code.For details, please refer mpp_err.h.</returns>
         public MPP_RET EncodeGetPacket(MppPacket packet)
         {
             return (MPP_RET)Api.encode_get_packet(Context, ref packet.Handle);
