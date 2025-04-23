@@ -1,4 +1,4 @@
-﻿namespace LinuxMedia.Rockchip
+﻿namespace LinuxMedia.Rockchip.Mpp
 {
     public abstract class MppHandle : IEquatable<MppHandle>
     {

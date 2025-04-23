@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace LinuxMedia.Rockchip
+namespace LinuxMedia.Rockchip.Rga
 {
     public static class RGA
     {
