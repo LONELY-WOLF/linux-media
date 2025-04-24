@@ -2,8 +2,64 @@
 
 namespace LinuxMedia.Drm.Mode
 {
-    public class BufferObject : DrmModeObject
+    public class BufferObject : DrmObjectHandle
     {
+        public readonly UInt32 Width, Height, Bpp, Flags, Pitch;
+        public readonly UInt64 Size;
+
+        private UInt64 offset = 0;
+        private bool isMapped = false;
+
+        public UInt64 Offset
+        {
+            get
+            {
+                if(!isMapped)
+                {
+                    throw new Exception("Buffer is not mapped");
+                }
+                return offset;
+            }
+        }
+
+        public BufferObject(DRM drm, UInt32 width, UInt32 height, UInt32 bpp, UInt32 flags, ref UInt32 handle, ref UInt32 pitch, ref UInt64 size)
+        {
+            Utils.ThrowExceptionOnErrno(
+                drmModeCreateDumbBuffer(drm.FD, width, height, bpp, flags, ref handle, ref pitch, ref size)
+                );
+            Width = width;
+            Height = height;
+            Bpp = bpp;
+            Flags = flags;
+            drm_handle = handle;
+            drm_fd = drm.FD;
+            Pitch = pitch;
+            Size = size;
+        }
+
+        ~BufferObject()
+        {
+            Utils.ThrowExceptionOnErrno(
+                drmModeDestroyDumbBuffer(drm_fd, drm_handle)
+                );
+        }
+
+        /// <summary>
+        /// Prepare a dumb buffer for mapping.
+        /// </summary>
+        /// <returns>The kernel returns an offset which can be used as an argument to mmap(2) on
+        /// the DRM FD.</returns>
+        public UInt64 Map()
+        {
+            if (!isMapped)
+            {
+                Utils.ThrowExceptionOnErrno(
+                    drmModeMapDumbBuffer(drm_fd, drm_handle, ref offset)
+                    );
+                isMapped = true;
+            }
+            return Offset;
+        }
         /**
          * Create a dumb buffer.
          *
@@ -29,14 +85,6 @@ namespace LinuxMedia.Drm.Mode
         [DllImport("libdrm", SetLastError = true)]
         internal static extern int drmModeDestroyDumbBuffer(int fd, UInt32 handle);
 
-        /**
-         * Prepare a dumb buffer for mapping.
-         *
-         * The kernel returns an offset which can be used as an argument to mmap(2) on
-         * the DRM FD.
-         *
-         * Returns 0 on success, negative errno on error.
-         */
         /// <summary>
         /// <c>int drmModeMapDumbBuffer(int fd, uint32_t handle, uint64_t* offset);</c>
         /// </summary>
