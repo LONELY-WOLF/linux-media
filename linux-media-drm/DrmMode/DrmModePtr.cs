@@ -1,6 +1,7 @@
 ﻿namespace LinuxMedia.Drm.Mode
 {
-    public class DrmModePtr
+    public abstract class DrmModePtr
     {
+        internal IntPtr Ptr;
     }
 }
