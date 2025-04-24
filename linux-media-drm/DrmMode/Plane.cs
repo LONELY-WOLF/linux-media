@@ -48,7 +48,7 @@ namespace LinuxMedia.Drm.Mode
                         formats = new UInt32[nativeInfo.count_formats];
                         for(int i = 0; i < nativeInfo.count_formats; i++)
                         {
-                            formats[i] = (UInt32)Marshal.ReadInt32(nativeInfo.formats, i);
+                            formats[i] = (UInt32)Marshal.ReadInt32(nativeInfo.formats, i * Marshal.SizeOf<UInt32>());
                         }
                     }
                     return formats;
