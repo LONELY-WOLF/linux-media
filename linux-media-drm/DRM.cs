@@ -1,8 +1,9 @@
-﻿using System.Runtime.InteropServices;
+﻿using LinuxMedia.Drm.Mode;
+using System.Runtime.InteropServices;
 
 namespace LinuxMedia.Drm
 {
-    public class DRM
+    public partial class DRM
     {
         public readonly int FD;
 
