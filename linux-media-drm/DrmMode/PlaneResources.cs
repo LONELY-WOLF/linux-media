@@ -16,12 +16,8 @@ namespace LinuxMedia.Drm
         {
             IntPtr plane_res_ptr = drmModeGetPlaneResources(FD);
             PlaneResources planeResources = Marshal.PtrToStructure<PlaneResources>(plane_res_ptr);
-            Plane[] planes = new Plane[planeResources.count_planes];
-            for (int i = 0; i < planeResources.count_planes; i++)
-            {
-                uint plane_id = (uint)Marshal.ReadInt32(planeResources.planes, i * Marshal.SizeOf<UInt32>());
-                planes[i] = new Plane(this, plane_id);
-            }
+            UInt32[] plane_ids = Utils.ReadUInt32Array(planeResources.planes, planeResources.count_planes);
+            Plane[] planes = plane_ids.Select<uint, Plane>(id => new Plane(this, id)).ToArray();
             return planes;
         }
 
