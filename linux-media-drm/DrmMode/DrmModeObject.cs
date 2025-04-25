@@ -6,14 +6,8 @@ namespace LinuxMedia.Drm.Mode
     {
         public abstract Type ObjectType { get; }
 
-        public readonly UInt32 ID;
-        public readonly int DRM_FD;
-
-        protected DrmModeObject(DRM drm, UInt32 id)
-        {
-            ID = id;
-            DRM_FD = drm.FD;
-        }
+        public UInt32 ID { get; protected set; }
+        public int DRM_FD { get; protected set; }
 
         /// <summary>
         /// <c>drmModeObjectPropertiesPtr drmModeObjectGetProperties(int fd, uint32_t object_id, uint32_t object_type);</c>

@@ -6,9 +6,10 @@ namespace LinuxMedia.Drm.Mode
     {
         public override Type ObjectType => Type.PLANE;
 
-        public Plane(DRM drm, UInt32 plane_id) : base(drm, plane_id)
+        public Plane(DRM drm, UInt32 plane_id)
         {
-
+            ID = plane_id;
+            DRM_FD = drm.FD;
         }
 
         public void Set(Crtc crtc, FrameBuffer fb, UInt32 flags, Int32 crtc_x, Int32 crtc_y, UInt32 crtc_w, UInt32 crtc_h, UInt32 src_x, UInt32 src_y, UInt32 src_w, UInt32 src_h)
