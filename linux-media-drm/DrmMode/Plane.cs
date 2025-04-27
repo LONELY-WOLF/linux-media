@@ -87,7 +87,6 @@ namespace LinuxMedia.Drm.Mode
 
                 internal UInt32 possible_crtcs;
                 internal UInt32 gamma_size;
-
             }
         }
 

@@ -6,7 +6,7 @@ namespace LinuxMedia.Drm
     public partial class DRM
     {
         [StructLayout(LayoutKind.Sequential)]
-        private struct PlaneResources
+        private struct DrmModePlaneRes
         {
             public UInt32 count_planes;
             public IntPtr planes;
@@ -15,9 +15,10 @@ namespace LinuxMedia.Drm
         public Plane[] GetPlaneResources()
         {
             IntPtr plane_res_ptr = drmModeGetPlaneResources(FD);
-            PlaneResources planeResources = Marshal.PtrToStructure<PlaneResources>(plane_res_ptr);
+            DrmModePlaneRes planeResources = Marshal.PtrToStructure<DrmModePlaneRes>(plane_res_ptr);
             UInt32[] plane_ids = Utils.ReadUInt32Array(planeResources.planes, planeResources.count_planes);
             Plane[] planes = plane_ids.Select<uint, Plane>(id => new Plane(this, id)).ToArray();
+            drmModeFreePlaneResources(plane_res_ptr);
             return planes;
         }
 
