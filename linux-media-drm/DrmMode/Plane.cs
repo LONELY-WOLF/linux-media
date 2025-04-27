@@ -9,28 +9,28 @@ namespace LinuxMedia.Drm.Mode
         public Plane(DRM drm, UInt32 plane_id)
         {
             ID = plane_id;
-            DRM_FD = drm.FD;
+            DRM = drm;
         }
 
         public void Set(Crtc crtc, FrameBuffer fb, UInt32 flags, Int32 crtc_x, Int32 crtc_y, UInt32 crtc_w, UInt32 crtc_h, UInt32 src_x, UInt32 src_y, UInt32 src_w, UInt32 src_h)
         {
             Utils.ThrowExceptionOnErrno(
-                drmModeSetPlane(DRM_FD, ID, crtc.ID, fb.ID, flags, crtc_x, crtc_y, crtc_w, crtc_h, src_x, src_y, src_w, src_h)
+                drmModeSetPlane(DRM.FD, ID, crtc.ID, fb.ID, flags, crtc_x, crtc_y, crtc_w, crtc_h, src_x, src_y, src_w, src_h)
                 );
         }
 
         public Info GetInfo()
         {
-            return new Info(DRM_FD, ID);
+            return new Info(DRM, ID);
         }
 
         public class Info : DrmModePtr
         {
             NativeInfo nativeInfo;
 
-            internal Info(int drm_fd, UInt32 plane_id)
+            internal Info(DRM drm, UInt32 plane_id)
             {
-                Ptr = drmModeGetPlane(drm_fd, plane_id);
+                Ptr = drmModeGetPlane(drm.FD, plane_id);
                 nativeInfo = Marshal.PtrToStructure<NativeInfo>(Ptr);
             }
 

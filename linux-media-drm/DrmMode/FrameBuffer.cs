@@ -11,23 +11,23 @@ namespace LinuxMedia.Drm.Mode
         public FrameBuffer(DRM drm, UInt32 fb_id)
         {
             ID = fb_id;
-            DRM_FD = drm.FD;
+            DRM = drm;
         }
 
         public FB GetFB()
         {
-            return new FB(DRM_FD, ID);
+            return new FB(DRM, ID);
         }
 
         public FB2 GetFB2()
         {
-            return new FB2(DRM_FD, ID);
+            return new FB2(DRM, ID);
         }
 
         public void RmFB()
         {
             Utils.ThrowExceptionOnErrno(
-                drmModeRmFB(DRM_FD, ID)
+                drmModeRmFB(DRM.FD, ID)
                 );
         }
 
@@ -40,9 +40,9 @@ namespace LinuxMedia.Drm.Mode
         {
             NativeFB nativeFB;
 
-            internal FB(int drm_fd, UInt32 fb_id)
+            internal FB(DRM drm, UInt32 fb_id)
             {
-                Ptr = drmModeGetFB(drm_fd, fb_id);
+                Ptr = drmModeGetFB(drm.FD, fb_id);
                 nativeFB = Marshal.PtrToStructure<NativeFB>(Ptr);
             }
 
@@ -90,9 +90,9 @@ namespace LinuxMedia.Drm.Mode
         {
             NativeFB2 nativeFB2;
 
-            internal FB2(int drm_fd, UInt32 fb_id)
+            internal FB2(DRM drm, UInt32 fb_id)
             {
-                Ptr = drmModeGetFB2(drm_fd, fb_id);
+                Ptr = drmModeGetFB2(drm.FD, fb_id);
                 nativeFB2 = Marshal.PtrToStructure<NativeFB2>(Ptr);
             }
 

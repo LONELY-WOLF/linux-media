@@ -7,7 +7,7 @@ namespace LinuxMedia.Drm.Mode
         public abstract Type ObjectType { get; }
 
         public UInt32 ID { get; protected set; }
-        public int DRM_FD { get; protected set; }
+        public DRM DRM { get; protected set; }
 
         /// <summary>
         /// <c>drmModeObjectPropertiesPtr drmModeObjectGetProperties(int fd, uint32_t object_id, uint32_t object_type);</c>
