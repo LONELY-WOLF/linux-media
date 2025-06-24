@@ -6,6 +6,24 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>LinuxMedia.Rockchip.Rga</Title>
+    <Version>$(AssemblyVersion)</Version>
+    <Authors>w0x1f</Authors>
+    <Copyright>© Artem Sabadyr 2025</Copyright>
+    <Description>Rockchip RGA (linux-rga) wrapper for .NET</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/LONELY-WOLF/linux-media</RepositoryUrl>
+    <PackageTags>rga;rockchip;</PackageTags>
+    <AssemblyVersion>1.0.0</AssemblyVersion>
+    <PackageLicenseExpression>GPL-2.0-only</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
